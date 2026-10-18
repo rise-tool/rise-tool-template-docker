@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 
 #
-# 让 Bash 在遇到某些错误时停止执行
+# 开启严格模式，出错直接退出
 #
 set -euo pipefail
 
 #
-# 进入项目根目录
+# 设置关闭参数
+#
+CLOSE_ARG="${1:-}"
+
+#
+# 进入项目目录
 #
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
 
@@ -15,8 +20,13 @@ cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
 #
 COMPOSE=(docker compose -f compose.yaml --env-file .env)
 
-if [[ "${1:-}" == "--no-clean" ]]; then
+if [[ "${CLOSE_ARG}" == "--no-clean" ]]; then
   "${COMPOSE[@]}" down
 else
   "${COMPOSE[@]}" down --rmi all
 fi
+
+#
+# 输出日志
+#
+docker ps

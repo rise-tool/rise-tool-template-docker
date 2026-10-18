@@ -1,17 +1,22 @@
 #!/usr/bin/env bash
 
 #
-# 让 Bash 在遇到某些错误时停止执行
+# 开启严格模式，出错直接退出
 #
 set -euo pipefail
 
 #
-# 进入项目根目录
+# 设置启动参数
+#
+START_ARG="${1:-}"
+
+#
+# 进入项目目录
 #
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.."
 
 #
-# 创建 .env 文件
+# 创建环境变量
 #
 cat > .env <<EOF
 EOF
@@ -21,9 +26,13 @@ EOF
 #
 COMPOSE=(docker compose -f compose.yaml --env-file .env)
 
-if [[ "${1:-}" == "--no-build" ]]; then
-  "${COMPOSE[@]}" up -d --no-build
-else
+if [[ "${START_ARG}" != "--no-build" ]]; then
   "${COMPOSE[@]}" build
-  "${COMPOSE[@]}" up -d
 fi
+
+"${COMPOSE[@]}" up -d --no-build
+
+#
+# 输出日志
+#
+docker ps
