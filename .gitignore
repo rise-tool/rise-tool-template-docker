@@ -1,4 +1,21 @@
 #
+# 忽略：volumes 目录下的所有内容
+#
+volumes/**
+
+#
+# 保留：volumes/test1 目录
+#
+!volumes/test1
+!volumes/test1/.gitkeep
+
+#
+# 保留：volumes/test2 目录
+#
+!volumes/test2
+!volumes/test2/.gitkeep
+
+#
 # 忽略：.env 文件
 #
 .env
