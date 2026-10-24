@@ -2,46 +2,66 @@
 
 这是一个 Docker Compose 通用服务的项目模板
 
-## Scripts
+## Usage
 
-### 服务启动
+### 1. 启动服务
+
+#### 1.1 启动参数
+
+|参数名称|参数含义|是否必须|参数值|
+|---|---|:-:|---|
+|--no-build|启动服务时不构建镜像|否|——|
+
+#### 1.2 启动示例
 
 ```bash
 #
-# 服务启动之前，执行 Dockerfile 构建
+# 启动服务，构建镜像
 #
 sudo bash scripts/start.sh
 
 #
-# 服务直接启动，忽略 Dockerfile 构建
+# 启动服务，复用镜像
 #
 sudo bash scripts/start.sh --no-build
 ```
 
-### 服务停止
+### 2. 关闭服务
+
+#### 2.1 关闭参数
+
+|参数名称|参数含义|是否必须|参数值|
+|---|---|:-:|---|
+|--no-clean|关闭服务时执行清理|否|——|
+
+#### 2.2 关闭示例
 
 ```bash
 #
-# 关闭服务，清理所有和服务相关的镜像
+# 关闭服务，执行清理
 #
 sudo bash scripts/close.sh
 
 #
-# 关闭服务，保留所有和服务相关的镜像
+# 关闭服务，保留资源
 #
 sudo bash scripts/close.sh --no-clean
 ```
 
-### 服务重启
+### 3. 重启服务
+
+#### 3.1 重启示例
 
 ```bash
 #
-# 重新构建 Dockerfile 并启动服务
+# 重启服务，构建镜像
 #
-sudo bash scripts/close.sh && sudo bash scripts/start.sh
+sudo bash scripts/close.sh \
+&& sudo bash scripts/start.sh
 
 #
-# 跳过构建 Dockerfile 并启动服务
+# 重启服务，跳过构建 Dockerfile
 #
-sudo bash scripts/close.sh --no-clean && sudo bash scripts/start.sh --no-build
+sudo bash scripts/close.sh --no-clean \
+&& sudo bash scripts/start.sh --no-build
 ```
