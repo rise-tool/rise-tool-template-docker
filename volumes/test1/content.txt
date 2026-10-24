@@ -1,0 +1,1 @@
+This is a 'content.txt' file in 'test2' folder.
