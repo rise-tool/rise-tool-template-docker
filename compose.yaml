@@ -4,31 +4,27 @@
 services:
   rise-tool-template-docker:
     #
-    # ====================== 1. 镜像构建 ======================
+    # 镜像构建
     #
     build:
       context: .
       dockerfile: Dockerfile
     image: rise-tool-template-docker:v1.0.0
     #
-    # ====================== 2. 容器标识 ======================
-    #
-    container_name: rise-tool-template-docker
-    #
-    # ====================== 3. 重启策略 ======================
+    # 重启策略
     #
     restart: no
     #
-    # ====================== 4. 环境变量 ======================
+    # 环境变量
     #
     #environment:
     #
-    # ====================== 5. 网络设置 ======================
+    # 网络设置
     #
     network_mode: host
     #ports:
     #
-    # ====================== 6. 存储挂载 ======================
+    # 存储挂载
     #
     volumes:
       - type: bind
