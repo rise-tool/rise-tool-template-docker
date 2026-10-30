@@ -16,6 +16,11 @@ SCRIPTS_DIR_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPTS_DIR_PATH}/share.sh"
 
 #
-# 执行服务清理
+# 执行项目清理（所有实例）
 #
-compose down --rmi all --remove-orphans
+compose_clean_instances
+
+#
+# 执行项目清理（所有镜像）
+#
+compose_clean_images

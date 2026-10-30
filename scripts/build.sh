@@ -16,6 +16,6 @@ SCRIPTS_DIR_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPTS_DIR_PATH}/share.sh"
 
 #
-# 执行服务构建
+# 构建全部服务和镜像
 #
-compose build
+compose_build

@@ -15,7 +15,11 @@ SCRIPTS_DIR_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 #
 source "${SCRIPTS_DIR_PATH}/share.sh"
 
+# 解析命令参数
 #
-# 执行服务停止
+parse_command_args "$@"
+
 #
-compose stop
+# 执行服务关闭
+#
+compose_close
