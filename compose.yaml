@@ -12,6 +12,11 @@ services:
     image: rise-tool-template-docker:v1.0.0
 
     #
+    # 容器名称
+    #
+    container_name: ${CONTAINER_NAME}
+
+    #
     # 重启策略
     #
     restart: no
