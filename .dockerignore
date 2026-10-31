@@ -4,6 +4,11 @@
 **
 
 #
+# 保留：bin 目录
+#
+!bin/
+
+#
 # 保留：.dockerignore 文件
 #
 !.dockerignore
