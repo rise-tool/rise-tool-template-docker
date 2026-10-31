@@ -14,7 +14,7 @@ services:
     #
     # 容器名称
     #
-    container_name: ${CONTAINER_NAME:-temp-name}
+    container_name: ${CONTAINER_NAME:-rise-service-default}
 
     #
     # 重启策略
