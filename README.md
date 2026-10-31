@@ -69,6 +69,8 @@ sudo bash scripts/clean.sh
 
 ## Development
 
+### 1. 版本管理
+
 ```bash
 #
 # 创建版本分支
