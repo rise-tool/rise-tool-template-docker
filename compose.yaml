@@ -22,6 +22,11 @@ services:
     restart: no
 
     #
+    # 环境变量
+    #
+    # environment:
+
+    #
     # 网络设置
     #
     network_mode: host

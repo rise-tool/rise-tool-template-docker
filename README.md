@@ -66,3 +66,29 @@ sudo bash scripts/rerun.sh --label 1
 ```bash
 sudo bash scripts/clean.sh
 ```
+
+## Development
+
+```bash
+#
+# 创建版本分支
+#
+git checkout main
+git checkout -b version/v1.0.0
+git push origin version/v1.0.0
+
+#
+# 创建版本标签
+#
+git tag -a v1.0.0 -m "首个正式版本"
+
+#
+# 查看当前版本（可选）
+#
+git show v1.0.0
+
+#
+# 推送版本标签
+#
+git push origin v1.0.0
+```
