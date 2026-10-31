@@ -14,7 +14,7 @@ services:
     #
     # 容器名称
     #
-    container_name: ${CONTAINER_NAME}
+    container_name: ${CONTAINER_NAME:-temp-name}
 
     #
     # 重启策略
@@ -32,7 +32,7 @@ services:
     #
     volumes:
       - type: bind
-        source: ${VOLUMES_TEST_PATH}
+        source: ${VOLUMES_TEST_PATH:-./volumes}
         target: /workspace/test
         read_only: true
         bind:
