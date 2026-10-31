@@ -6,14 +6,14 @@
 set -euo pipefail
 
 #
-# 设置内部变量
+# 设置脚本路径
 #
-SCRIPTS_DIR_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPTS_ROOT_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
 #
 # 加载公共脚本
 #
-source "${SCRIPTS_DIR_PATH}/share.sh"
+source "${SCRIPTS_ROOT_PATH}/share.sh"
 
 # 解析命令参数
 #
