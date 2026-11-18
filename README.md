@@ -29,6 +29,12 @@ sudo bash scripts/build.sh
 
 ```bash
 #
+# 设置环境变量
+#
+export TEST_SERVER_USER=NathanCong
+export TEST_SERVER_PASS=12345678
+
+#
 # 例如：要启动 rise-service-test-1 实例
 #
 sudo bash scripts/start.sh --label 1
@@ -46,6 +52,12 @@ sudo bash scripts/close.sh --label 1
 ### 4. 重启服务
 
 ```bash
+#
+# 设置环境变量
+#
+export TEST_SERVER_USER=NathanCong
+export TEST_SERVER_PASS=12345678
+
 #
 # 例如：要重启 rise-service-test-1 实例
 #
