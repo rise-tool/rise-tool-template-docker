@@ -43,7 +43,7 @@ private_check_file_exists() {
 private_generate_config_file() {
   # 定义内部变量
   local temp_config_path="/etc/test/server.conf"
-  local auth_config_path="/etc/test/server-auth.conf"
+  local auth_config_path="/tmp/test/server-auth.conf"
   local exec_config_path="${1:-}"
   # 校验指定文件
   private_check_file_exists "$temp_config_path"

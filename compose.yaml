@@ -37,8 +37,8 @@ services:
     #
     volumes:
       - type: bind
-        source: ${VOLUMES_TEST_PATH:-./volumes/server.conf}
-        target: /etc/test/server.conf
+        source: ${VOLUMES_TEST_PATH:-./volumes}
+        target: /etc/test
         read_only: true
         bind:
           create_host_path: false
