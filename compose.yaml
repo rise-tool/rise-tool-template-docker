@@ -24,7 +24,9 @@ services:
     #
     # 环境变量
     #
-    # environment:
+    environment:
+      TEST_SERVER_USER: ${TEST_SERVER_USER:-}
+      TEST_SERVER_PASS: ${TEST_SERVER_PASS:-}
 
     #
     # 网络设置
