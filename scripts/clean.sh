@@ -18,4 +18,4 @@ source "${SCRIPTS_ROOT_PATH}/share.sh"
 #
 # 执行项目清理
 #
-compose_clean
+private_compose_clean
