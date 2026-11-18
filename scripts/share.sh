@@ -61,6 +61,7 @@ private_parse_command_args() {
   while (($#)); do
     case "$1" in
       --label)
+        private_check_command_arg "$1" "${2:-}"
         label="${2,,}"
         shift 2
         ;;
