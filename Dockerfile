@@ -6,25 +6,26 @@ FROM rockylinux:9-minimal
 #
 # 安装服务依赖
 #
-RUN microdnf update -y \
-&& microdnf install -y epel-release \
-&& microdnf clean all \
-&& rm -rf /var/cache/dnf /var/cache/yum
+RUN microdnf install -y epel-release \
+    && microdnf clean all
 
 #
-# 创建工作目录
+# 设置安全凭证
 #
-WORKDIR /workspace
+ARG TEST_SERVER_USER
+ARG TEST_SERVER_PASS
+RUN set -eu; \
+    test -n "$TEST_SERVER_USER"; \
+    test -n "$TEST_SERVER_PASS"; \
+    umask 077; \
+    mkdir -p /etc/test; \
+    printf 'username=%s\npassword=%s\n' "$TEST_SERVER_USER" "$TEST_SERVER_PASS" > /etc/test/server-auth.conf
 
 #
 # 设置启动脚本
 #
 COPY ./bin/test.sh /usr/local/bin/
 RUN chmod 0755 /usr/local/bin/test.sh
-
-#
-# 指定启动脚本
-#
 ENTRYPOINT ["/usr/local/bin/test.sh"]
 
 #

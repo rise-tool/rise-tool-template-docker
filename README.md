@@ -22,12 +22,6 @@
 ### 1. 构建项目
 
 ```bash
-sudo bash scripts/build.sh
-```
-
-### 2. 启动服务
-
-```bash
 #
 # 设置环境变量
 #
@@ -35,9 +29,18 @@ export TEST_SERVER_USER=NathanCong
 export TEST_SERVER_PASS=12345678
 
 #
+# 执行项目构建
+#
+sudo -E bash scripts/build.sh
+```
+
+### 2. 启动服务
+
+```bash
+#
 # 例如：要启动 rise-service-test-1 实例
 #
-sudo -E bash scripts/start.sh --label 1
+sudo bash scripts/start.sh --label 1
 ```
 
 ### 3. 关闭服务
@@ -53,20 +56,17 @@ sudo bash scripts/close.sh --label 1
 
 ```bash
 #
-# 设置环境变量
-#
-export TEST_SERVER_USER=NathanCong
-export TEST_SERVER_PASS=12345678
-
-#
 # 例如：要重启 rise-service-test-1 实例
 #
-sudo -E bash scripts/rerun.sh --label 1
+sudo bash scripts/rerun.sh --label 1
 ```
 
 ### 5. 清理项目
 
 ```bash
+#
+# 执行项目清理
+#
 sudo bash scripts/clean.sh
 ```
 

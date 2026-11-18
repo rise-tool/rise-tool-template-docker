@@ -26,29 +26,67 @@ COMPOSE_SHARE=(docker compose -f "$COMPOSE_YAML_PATH")
 # 设置：内部函数 - 打印错误日志
 #
 private_print_error() {
-  echo "错误：$1" >&2
+  # 定义内部变量
+  local error_message="${1:-}"
+  # 打印错误日志
+  echo "错误：$error_message" >&2
 }
 
 #
 # 设置：内部函数 - 抛出异常
 #
 private_throw_error() {
-  private_print_error "$1"
+  # 定义内部变量
+  local error_message="${1:-}"
+  # 打印错误日志
+  private_print_error "$error_message"
+  # 退出脚本
   exit 1
+}
+
+#
+# 设置：内部函数 - 校验环境变量
+#
+private_check_env() {
+  # 定义内部变量
+  local env_key="${1:-}"
+  local env_value="${2:-}"
+  # 校验环境变量
+  [ -n "$env_value" ] || private_throw_error "环境变量 $env_key 不能为空！"
+}
+
+#
+# 设置：外部函数 - 执行项目构建
+#
+public_compose_build() {
+  # 校验环境变量
+  private_check_env "TEST_SERVER_USER" "${TEST_SERVER_USER:-}"
+  private_check_env "TEST_SERVER_PASS" "${TEST_SERVER_PASS:-}"
+  # 执行项目构建
+  "${COMPOSE_SHARE[@]}" build \
+    --build-arg TEST_SERVER_USER="${TEST_SERVER_USER}" \
+    --build-arg TEST_SERVER_PASS="${TEST_SERVER_PASS}"
 }
 
 #
 # 设置：内部函数 - 校验命令参数
 #
 private_check_command_arg() {
-  [[ -n "${2:-}" ]] || private_throw_error "参数 $1 不能为空！"
+  # 定义内部变量
+  local arg_key="${1:-}"
+  local arg_value="${2:-}"
+  # 校验命令参数
+  [[ -n "$arg_value" ]] || private_throw_error "参数 $arg_key 不能为空！"
 }
 
 #
-# 设置：内部函数 - 校验环境变量文件路径
+# 设置：内部函数 - 校验文件是否存在
 #
-private_check_env_file_path() {
-  [[ -f "$1" ]] || private_throw_error "环境变量文件 $1 不存在！"
+private_check_file_exists() {
+  # 定义内部变量
+  local file_path="${1:-}"
+  # 校验文件是否存在
+  [[ -f "$file_path" ]] || private_throw_error "文件 $file_path 不存在！"
 }
 
 #
@@ -61,12 +99,12 @@ private_parse_command_args() {
   while (($#)); do
     case "$1" in
       --label)
-        private_check_command_arg "$1" "${2:-}"
+        private_check_command_arg "${1:-}" "${2:-}"
         label="${2,,}"
         shift 2
         ;;
       *)
-        private_throw_error "参数 $1 不支持！"
+        private_throw_error "参数 ${1:-} 不支持！"
         ;;
     esac
   done
@@ -77,14 +115,7 @@ private_parse_command_args() {
   # 更新 Docker Compose 实例环境变量文件路径
   ENV_FILE_PATH="${ENVVARS_ROOT_PATH}/${INSTANCE_NAME}.env"
   # 校验环境变量文件路径
-  private_check_env_file_path "$ENV_FILE_PATH"
-}
-
-#
-# 设置：外部函数 - 执行项目构建
-#
-public_compose_build() {
-  "${COMPOSE_SHARE[@]}" build
+  private_check_file_exists "$ENV_FILE_PATH"
 }
 
 #
