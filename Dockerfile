@@ -18,8 +18,8 @@ RUN set -eu; \
     test -n "$TEST_SERVER_USER"; \
     test -n "$TEST_SERVER_PASS"; \
     umask 077; \
-    mkdir -p /etc/test; \
-    printf 'username=%s\npassword=%s\n' "$TEST_SERVER_USER" "$TEST_SERVER_PASS" > /etc/test/server-auth.conf
+    mkdir -p /tmp/test; \
+    printf 'username=%s\npassword=%s\n' "$TEST_SERVER_USER" "$TEST_SERVER_PASS" > /tmp/test/server-auth.conf
 
 #
 # 设置启动脚本
