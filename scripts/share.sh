@@ -30,23 +30,25 @@ private_print_error() {
 }
 
 #
+# 设置：内部函数 - 抛出异常
+#
+private_throw_error() {
+  private_print_error "$1"
+  exit 1
+}
+
+#
 # 设置：内部函数 - 校验命令参数
 #
 private_check_command_arg() {
-  [[ -n "${2:-}" ]] || {
-    private_print_error "参数 $1 不能为空！"
-    exit 1
-  }
+  [[ -n "${2:-}" ]] || private_throw_error "参数 $1 不能为空！"
 }
 
 #
 # 设置：内部函数 - 校验环境变量文件路径
 #
 private_check_env_file_path() {
-  [[ -f "$1" ]] || {
-    private_print_error "环境变量文件 $1 不存在！"
-    exit 1
-  }
+  [[ -f "$1" ]] || private_throw_error "环境变量文件 $1 不存在！"
 }
 
 #
@@ -59,19 +61,16 @@ private_parse_command_args() {
   while (($#)); do
     case "$1" in
       --label)
-        # 校验命令参数
-        private_check_command_arg "$1" "${2:-}"
-        # 更新 label 变量值（转换小写）
         label="${2,,}"
         shift 2
         ;;
       *)
-        # 参数不支持，打印错误日志，退出程序
-        private_print_error "参数 $1 不支持！"
-        exit 1
+        private_throw_error "参数 $1 不支持！"
         ;;
     esac
   done
+  # 校验命令参数
+  private_check_command_arg "--label" "$label"
   # 更新 Docker Compose 实例名称
   INSTANCE_NAME="${INSTANCE_NAME}-${label}"
   # 更新 Docker Compose 实例环境变量文件路径
@@ -158,22 +157,19 @@ private_compose_clean_images() {
   # 定义内部变量
   local image_list
   local image_name
+  local image_info
   # 获取所有 Docker 镜像列表
-  image_list="$("${COMPOSE_SHARE[@]}" config --images | sort -u)" || {
-    private_print_error "获取 Docker 镜像列表失败！"
-    exit 1
-  }
+  image_list="$("${COMPOSE_SHARE[@]}" config --images | sort -u)" || private_throw_error "获取 Docker 镜像列表失败！"
   # 清理所有 Docker 镜像
   while IFS= read -r image_name; do
-    # 镜像名不存在，跳过清理
+    # 镜像名称不存在，跳过清理
     [[ -n "$image_name" ]] || continue
-    # 镜像不存在，跳过清理
-    docker image inspect "$image_name" >/dev/null 2>&1 || continue
+    # 根据镜像名称查询镜像信息
+    image_info="$(docker image ls --quiet --filter "reference=$image_name")" || private_throw_error "查询 Docker 镜像 $image_name 失败！"
+    # 镜像信息不存在，跳过清理
+    [[ -n "$image_info" ]] || continue
     # 镜像存在，执行清理
-    docker image rm "$image_name" || {
-      private_print_error "删除 Docker 镜像 $image_name 失败！"
-      exit 1
-    }
+    docker image rm "$image_name" || private_throw_error "清理 Docker 镜像 $image_name 失败！"
   done <<< "$image_list"
 }
 

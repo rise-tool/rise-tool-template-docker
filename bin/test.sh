@@ -13,20 +13,18 @@ private_print_error() {
 }
 
 #
-# 设置内部函数：校验环境变量
+# 设置内部函数：抛出异常
 #
-private_check_env() {
-  [ -n "${2:-}" ] || {
-    private_print_error "环境变量 $1 未设置！"
-    exit 1
-  }
+private_throw_error() {
+  private_print_error "$1"
+  exit 1
 }
 
 #
-# 设置内部函数：打印环境变量
+# 设置内部函数：校验环境变量
 #
-private_print_env() {
-  echo "$1: ${2:-}"
+private_check_env() {
+  [ -n "${2:-}" ] || private_throw_error "环境变量 $1 不能为空！"
 }
 
 #
