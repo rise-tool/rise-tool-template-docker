@@ -43,12 +43,6 @@ private_check_env "TEST_SERVER_USER" "${TEST_SERVER_USER:-}"
 private_check_env "TEST_SERVER_PASS" "${TEST_SERVER_PASS:-}"
 
 #
-# 打印环境变量
-#
-private_print_env "TEST_SERVER_USER" "${TEST_SERVER_USER:-}"
-private_print_env "TEST_SERVER_PASS" "${TEST_SERVER_PASS:-}"
-
-#
 # 打印文件内容
 #
 private_print_file "/workspace/test/content.txt"
