@@ -60,12 +60,12 @@ private_check_env() {
 #
 public_compose_build() {
   # 校验环境变量
-  private_check_env "TEST_SERVER_USERNAME" "${TEST_SERVER_USERNAME:-}"
-  private_check_env "TEST_SERVER_PASSWORD" "${TEST_SERVER_PASSWORD:-}"
+  private_check_env "TEST_SERVER_USER" "${TEST_SERVER_USER:-}"
+  private_check_env "TEST_SERVER_PASS" "${TEST_SERVER_PASS:-}"
   # 执行项目构建
   "${COMPOSE_SHARE[@]}" build \
-    --build-arg TEST_SERVER_USERNAME="${TEST_SERVER_USERNAME}" \
-    --build-arg TEST_SERVER_PASSWORD="${TEST_SERVER_PASSWORD}"
+    --build-arg TEST_SERVER_USER="${TEST_SERVER_USER}" \
+    --build-arg TEST_SERVER_PASS="${TEST_SERVER_PASS}"
 }
 
 #

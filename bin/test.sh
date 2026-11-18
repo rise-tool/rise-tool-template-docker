@@ -42,12 +42,14 @@ private_check_file_exists() {
 #
 private_generate_config_file() {
   # 定义内部变量
+  local temp_config_path="/etc/test/server.conf"
   local auth_config_path="/etc/test/server-auth.conf"
   local exec_config_path="${1:-}"
   # 校验指定文件
+  private_check_file_exists "$temp_config_path"
   private_check_file_exists "$auth_config_path"
   # 生成配置文件
-  { cat "$auth_config_path"; } > "$exec_config_path"
+  { cat "$temp_config_path"; printf "\n"; cat "$auth_config_path"; } > "$exec_config_path"
 }
 
 #
@@ -63,7 +65,7 @@ private_start_app() {
   # 生成配置文件
   private_generate_config_file "$exec_config_path"
   # 执行服务启动
-  exec turnserver "$@"
+  exec cat "$exec_config_path"
 }
 
 #
