@@ -33,7 +33,7 @@ private_print_error() {
 # 设置：内部函数 - 校验命令参数
 #
 private_check_command_arg() {
-  [[ -n "$2" ]] || {
+  [[ -n "${2:-}" ]] || {
     private_print_error "参数 $1 不能为空！"
     exit 1
   }
@@ -54,13 +54,13 @@ private_check_env_file_path() {
 #
 private_parse_command_args() {
   # 定义内部变量
-  local label
+  local label=""
   # 循环读取参数
   while (($#)); do
     case "$1" in
       --label)
         # 校验命令参数
-        private_check_command_arg "$1" "$2"
+        private_check_command_arg "$1" "${2:-}"
         # 更新 label 变量值（转换小写）
         label="${2,,}"
         shift 2
@@ -156,16 +156,25 @@ private_compose_clean_instances() {
 #
 private_compose_clean_images() {
   # 定义内部变量
+  local image_list
   local image_name
+  # 获取所有 Docker 镜像列表
+  image_list="$("${COMPOSE_SHARE[@]}" config --images | sort -u)" || {
+    private_print_error "获取 Docker 镜像列表失败！"
+    exit 1
+  }
   # 清理所有 Docker 镜像
-  for image_name in $("${COMPOSE_SHARE[@]}" config --images | sort -u); do
+  while IFS= read -r image_name; do
     # 镜像名不存在，跳过清理
     [[ -n "$image_name" ]] || continue
     # 镜像不存在，跳过清理
     docker image inspect "$image_name" >/dev/null 2>&1 || continue
     # 镜像存在，执行清理
-    docker image rm "$image_name"
-  done
+    docker image rm "$image_name" || {
+      private_print_error "删除 Docker 镜像 $image_name 失败！"
+      exit 1
+    }
+  done <<< "$image_list"
 }
 
 #
