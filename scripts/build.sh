@@ -18,4 +18,4 @@ source "${SCRIPTS_ROOT_PATH}/share.sh"
 #
 # 执行项目构建
 #
-compose_build
+public_compose_build

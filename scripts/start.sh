@@ -15,11 +15,7 @@ SCRIPTS_ROOT_PATH="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 #
 source "${SCRIPTS_ROOT_PATH}/share.sh"
 
-# 解析命令参数
-#
-parse_command_args "$@"
-
 #
 # 执行服务启动
 #
-compose_start
+public_compose_start "$@"

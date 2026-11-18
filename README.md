@@ -2,40 +2,45 @@
 
 这是一个 Docker Compose 通用服务的项目模板
 
-## Usage
+## Configuration
 
-### 1. 项目构建
+### 1. 环境变量
 
-```bash
-sudo bash scripts/build.sh
-```
+|变量名称|变量含义|是否必须|默认值|可选值|
+|:-:|:-:|:-:|:-:|:-:|
+|TEST_SERVER_USER|test 服务 username|是|——|——|
+|TEST_SERVER_PASS|test 服务 password|是|——|——|
 
-### 2. 服务启动
-
-#### 2.1 启动参数
+### 2. 命令参数
 
 |参数名称|参数含义|是否必须|默认值|可选值|
 |:-:|:-:|:-:|:-:|:-:|
 |--label|要启动的实例标签|是|——|——|
 
-#### 2.2 启动示例
+## Usage
+
+### 1. 构建项目
+
+```bash
+sudo bash scripts/build.sh
+```
+
+### 2. 启动服务
 
 ```bash
 #
+# 设置环境变量
+#
+export TEST_SERVER_USER=NathanCong
+export TEST_SERVER_PASS=12345678
+
+#
 # 例如：要启动 rise-service-test-1 实例
 #
-sudo bash scripts/start.sh --label 1
+sudo -E bash scripts/start.sh --label 1
 ```
 
-### 3. 服务关闭
-
-#### 3.1 关闭参数
-
-|参数名称|参数含义|是否必须|默认值|可选值|
-|:-:|:-:|:-:|:-:|:-:|
-|--label|要关闭的实例标签|是|——|——|
-
-#### 3.2 关闭示例
+### 3. 关闭服务
 
 ```bash
 #
@@ -44,24 +49,22 @@ sudo bash scripts/start.sh --label 1
 sudo bash scripts/close.sh --label 1
 ```
 
-### 4. 服务重启
-
-#### 4.1 重启参数
-
-|参数名称|参数含义|是否必须|默认值|可选值|
-|:-:|:-:|:-:|:-:|:-:|
-|--label|要重启的实例标签|是|——|——|
-
-#### 4.2 重启示例
+### 4. 重启服务
 
 ```bash
 #
+# 设置环境变量
+#
+export TEST_SERVER_USER=NathanCong
+export TEST_SERVER_PASS=12345678
+
+#
 # 例如：要重启 rise-service-test-1 实例
 #
-sudo bash scripts/rerun.sh --label 1
+sudo -E bash scripts/rerun.sh --label 1
 ```
 
-### 5. 项目清理
+### 5. 清理项目
 
 ```bash
 sudo bash scripts/clean.sh
